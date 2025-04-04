@@ -21,14 +21,19 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 10;
 
+  // Dynamically set base URL based on the environment
+  const baseUrl = process.env.NODE_ENV === "development"
+    ? "http://localhost:5000" // Local development URL
+    : "https://cms.klanlogistics.com:8443"; // Production URL
+
   useEffect(() => {
     axios
-      .get("https://cms.klanlogistics.com:8443/api/wylon-apis/protected?passcode=wylon2025access")
+      .get(`https://cms.klanlogistics.com:8443/api/wylon-apis/protected?passcode=wylon2025access`)
       .then((res) => {
         setEvents(res.data.data);
       })
       .catch((err) => console.error("Error fetching violations", err));
-  }, []);
+  }, [baseUrl]);
 
   const handleModalOpen = (event) => {
     setSelectedEvent(event);
@@ -89,7 +94,7 @@ function App() {
 
       // Send data to backend API to save
       axios
-        .post("http://localhost:5000/api/actions", actionData)
+        .post(`${baseUrl}/api/actions`, actionData)
         .then((res) => {
           // Update events with the action taken
           setActions((prevActions) => [
@@ -121,21 +126,20 @@ function App() {
 
   return (
     <div className="App" style={{ padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-<h1 style={{ textAlign: "center", color: "#4b0082" }}>
-  <div style={{ marginBottom: "15px" }}>
-    <img
-      src="/klanlogo.png"
-      alt="Klan Logistics Logo"
-      style={{
-        width: "240px",  
-        height: "120px",
-        objectFit: "contain",
-      }}
-    />
-  </div>
-  Klan Logistics Violations
-</h1>
-
+      <h1 style={{ textAlign: "center", color: "#4b0082" }}>
+        <div style={{ marginBottom: "15px" }}>
+          <img
+            src="/klanlogo.png"
+            alt="Klan Logistics Logo"
+            style={{
+              width: "240px",  
+              height: "120px",
+              objectFit: "contain",
+            }}
+          />
+        </div>
+        Klan Logistics Violations
+      </h1>
 
       <table border="1" cellPadding="10" style={{ marginTop: "2rem", width: "100%", borderColor: "#4b0082", borderRadius: "8px" }}>
         <thead style={{ backgroundColor: "#4b0082", color: "white" }}>
