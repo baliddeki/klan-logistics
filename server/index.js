@@ -7,7 +7,7 @@ const db = new sqlite3.Database('./actions.db');
 
 app.use(bodyParser.json());
 
-// Initialize database (run once to set up the table)
+// Initialize database
 db.serialize(() => {
   db.run(
     `CREATE TABLE IF NOT EXISTS actions (
