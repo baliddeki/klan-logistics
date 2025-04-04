@@ -1,0 +1,28 @@
+# Node modules
+node_modules/
+client/node_modules/
+server/node_modules/
+
+# Logs
+*.log
+
+# Build
+client/build/
+server/dist/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# DB (if SQLite)
+server/actions.db
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
